@@ -59,10 +59,10 @@ public class AccountController {
         // TODO バリデーションチェック、パスワード一致チェック実装
         if(password.length() >= 8 && password.matches("^[0-9a-zA-Z]+$")) {
         	if (password. equals (passwordForCheck)) {
-        			userInfo.setPassword(password);
-        			usersService.registUser(userInfo);
-        			
-        			return "login";
+        		userInfo.setPassword(password);
+        		usersService.registUser(userInfo);
+    			
+        		return "login";
                 
         	} else {
         		model.addAttribute("errorPassword", "パスワードが一致しません。");
