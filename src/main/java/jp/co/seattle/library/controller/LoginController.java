@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jp.co.seattle.library.dto.UserInfo;
 import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.UsersService;
 
@@ -44,13 +45,37 @@ public class LoginController {
             Model model) {
 
         // TODO 下記のコメントアウトを外してサービスクラスを使用してください。
-        //        UserInfo selectedUserInfo = usersService.selectUserInfo(email, password);
+        UserInfo selectedUserInfo = usersService.selectUserInfo(email, password);
 
         // TODO パスワードとメールアドレスの組み合わせ存在チェック実装
+        if (selectedUserInfo . equals (email)) {
+        	
+        }
 
-        // 本の情報を取得して画面側に渡す
-        model.addAttribute("bookList", booksService.getBookList());
-        return "home";
+          
+        
+        
+        
+        
+        
+        
+        
+        
+//        String mailAddress;
+//        String mailFormat = ("^[a-zA-Z0-9!#$%&'_`/=~\\*\\+\\-\\?\\^\\{\\|\\}]+(\\.[a-zA-Z0-9!#$%&'_`/=~\\*\\+\\-\\?\\^\\{\\|\\}]+)*+(.*)@[a-zA-Z0-9][a-zA-Z0-9\\-]*(\\.[a-zA-Z0-9\\-]+)+$");
+//        if (!mailAddress.matches(mailFormat)) {
+//        	if (password.length() >= 8 && password.matches("^[0-9a-zA-Z]+$")) {
+//        // 本の情報を取得して画面側に渡す
+//        		model.addAttribute("bookList", booksService.getBookList());
+//                return "home";
+//        	}
+//        	
+//        } else {
+//        	model.addAttribute("bookList", booksService.getBookList());
+//        	return "login";
+//        }
+//        
+        
 
     }
 }
