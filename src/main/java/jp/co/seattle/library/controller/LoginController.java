@@ -51,7 +51,7 @@ public class LoginController {
     	if (selectedUserInfo == null) {
     		model.addAttribute("errorMessage", "ユーザーが存在しません。");
     		return "login";
-	    } else {
+		} else {
 	    	// 本の情報を取得して画面側に渡す
 	        model.addAttribute("bookList", booksService.getBookList());
 	        return "home";

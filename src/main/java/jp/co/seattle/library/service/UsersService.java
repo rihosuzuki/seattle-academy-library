@@ -49,13 +49,10 @@ public class UsersService {
         try {
         	UserInfo selectedUserInfo = jdbcTemplate.queryForObject(sql, new UserCountRowMapper());
         	return selectedUserInfo;
-         	
-        } catch (Exception e) {
-        	return null;
+    	} catch (Exception e) {
+    		return null;
         }
-
-    }
-    
+    }  
 }
 
 
