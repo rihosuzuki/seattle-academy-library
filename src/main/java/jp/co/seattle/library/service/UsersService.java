@@ -42,13 +42,20 @@ public class UsersService {
      * @param password パスワード
      * @return ユーザー情報
      */
-    public UserInfo selectUserInfo(String email, String password) {
+    public UserInfo selectUserInfo(String email, String password) { 
         // TODO SQL生成
-        String sql = "";
-
-        UserInfo selectedUserInfo = jdbcTemplate.queryForObject(sql, new UserCountRowMapper());
-        return selectedUserInfo;
+        String sql = "select email, password from users where email = '" + email + "' and password = '" + password + "'";
+    
+        try {
+        	UserInfo selectedUserInfo = jdbcTemplate.queryForObject(sql, new UserCountRowMapper());
+        	return selectedUserInfo;
+         	
+        } catch (Exception e) {
+        	return null;
+        }
 
     }
-
+    
 }
+
+
