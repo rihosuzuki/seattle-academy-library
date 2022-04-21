@@ -38,18 +38,6 @@ public class BooksService {
 
         return getedBookList;
     }
-    
-    /**
-     * 書籍リストを削除する
-     *
-     * @return 書籍削除
-     */
-    public void deleteBookList(int bookId) {
-    	String sql = "delete from books where id = '" + bookId + "'";		
-    	
-    	jdbcTemplate.update(sql);
-    }
-    
 
     /**
      * 書籍IDに紐づく書籍詳細情報を取得する
