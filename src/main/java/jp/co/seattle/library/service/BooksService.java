@@ -94,13 +94,12 @@ public class BooksService {
     
     
     /**
-     * 書籍IDに紐づく書籍詳細情報を取得する
+     * 最新の書籍IDを取得する
      *
-     * @return 書籍ID
+     * @return 最新の書籍ID
      */
     public int getMaxId() {
 
-        // JSPに渡すデータを設定する
         String sql = "SELECT MAX(id) FROM books";
 
         int bookId = jdbcTemplate.queryForObject(sql, Integer.class);
