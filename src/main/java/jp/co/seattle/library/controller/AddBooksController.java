@@ -117,9 +117,9 @@ public class AddBooksController {
 
         // TODO 登録した書籍の詳細情報を表示するように実装
         //  詳細画面に遷移する
-        bookInfo.setBookId(booksService.getMaxId());
-        model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookInfo.getBookId()));
-        return "details";
+        int maxId = booksService.getMaxId();
+		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(maxId));
+		return "details";
     }
     
 }
