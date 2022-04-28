@@ -32,13 +32,14 @@ public class EditController {
 
 	@Autowired
 	private ThumbnailService thumbnailService;
-	
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST) // value＝actionで指定したパラメータ
 	// RequestParamでname属性を取得
 	public String login(Model model, int bookId) {
 		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 		return "edit";
 	}
+
 	/**
 	 * 書籍情報を編集する
 	 * 
@@ -50,52 +51,51 @@ public class EditController {
 	 * @param model     モデル
 	 * @return 遷移先画面
 	 */
-    @Transactional
-    @RequestMapping(value = "/editBook", method = RequestMethod.POST)
-    public String editBook(Locale locale,
-            @RequestParam("bookId") int bookId,
-            @RequestParam("title") String title, 
-			@RequestParam("author") String author,
-			@RequestParam("publisher") String publisher, 
-			@RequestParam("publishDate") String publishDate,
-			@RequestParam("ISBN") String ISBN, 
-			@RequestParam("description") String description,
-			@RequestParam("thumbnail")MultipartFile file, Model model) {
-        // デバッグ用ログ
-        logger.info("Welcome detailsControler.java! The client locale is {}.", locale);
-        
-        BookDetailsInfo bookInfo = new BookDetailsInfo();
-        bookInfo.setBookId(bookId);
-        bookInfo.setTitle(title);
-        bookInfo.setAuthor(author);
-        bookInfo.setPublisher(publisher);
-        bookInfo.setPublishDate(publishDate);
-        bookInfo.setISBN(ISBN);
-        bookInfo.setDescription(description);
-        
-        
-        // クライアントのファイルシステムにある元のファイル名を設定する
- 		String thumbnail = file.getOriginalFilename();
+	@Transactional
+	@RequestMapping(value = "/editBook", method = RequestMethod.POST)
+	public String editBook(Locale locale, 
+			@RequestParam("bookId") int bookId, 
+			@RequestParam("title") String title,
+			@RequestParam("author") String author, 
+			@RequestParam("publisher") String publisher,
+			@RequestParam("publishDate") String publishDate, 
+			@RequestParam("ISBN") String ISBN,
+			@RequestParam("description") String description, 
+			@RequestParam("thumbnail") MultipartFile file,
+			Model model) {
+		// デバッグ用ログ
+		logger.info("Welcome detailsControler.java! The client locale is {}.", locale);
 
- 		if (!file.isEmpty()) {
- 			try {
- 				// サムネイル画像をアップロード
- 				String fileName = thumbnailService.uploadThumbnail(thumbnail, file);
- 				// URLを取得
- 				String thumbnailUrl = thumbnailService.getURL(fileName);
+		BookDetailsInfo bookInfo = new BookDetailsInfo();
+		bookInfo.setBookId(bookId);
+		bookInfo.setTitle(title);
+		bookInfo.setAuthor(author);
+		bookInfo.setPublisher(publisher);
+		bookInfo.setPublishDate(publishDate);
+		bookInfo.setISBN(ISBN);
+		bookInfo.setDescription(description);
 
- 				bookInfo.setThumbnailName(fileName);
- 				bookInfo.setThumbnailUrl(thumbnailUrl);
+		// クライアントのファイルシステムにある元のファイル名を設定する
+		String thumbnail = file.getOriginalFilename();
 
- 			} catch (Exception e) {
+		if (!file.isEmpty()) {
+			try {
+				// サムネイル画像をアップロード
+				String fileName = thumbnailService.uploadThumbnail(thumbnail, file);
+				// URLを取得
+				String thumbnailUrl = thumbnailService.getURL(fileName);
 
- 				// 異常終了時の処理
- 				logger.error("サムネイルアップロードでエラー発生", e);
- 				model.addAttribute("bookDetailsInfo", bookInfo);
- 				return "edit";
- 			}
- 		}
- 		
+				bookInfo.setThumbnailName(fileName);
+				bookInfo.setThumbnailUrl(thumbnailUrl);
+
+			} catch (Exception e) {
+
+				// 異常終了時の処理
+				logger.error("サムネイルアップロードでエラー発生", e);
+				model.addAttribute("bookDetailsInfo", bookInfo);
+				return "edit";
+			}
+		}
 
 		List<String> list = new ArrayList<String>();
 		if (title.equals("") || author.equals("") || publisher.equals("") || publishDate.length() == 0) {
@@ -118,8 +118,7 @@ public class EditController {
 			model.addAttribute("bookDetailsInfo", bookInfo);
 			return "edit";
 		}
-		
-		
+
 		// 書籍情報を更新する
 		booksService.editBook(bookInfo);
 
@@ -127,7 +126,6 @@ public class EditController {
 		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 		return "details";
 
-    }
+	}
 
 }
-
