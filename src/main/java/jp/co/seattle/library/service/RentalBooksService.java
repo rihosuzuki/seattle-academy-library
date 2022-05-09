@@ -22,7 +22,7 @@ public class RentalBooksService {
 	 * 書籍IDに紐づく書籍詳細情報を取得する
 	 *
 	 * @param bookId 書籍ID
-	 * @return 書籍情報
+	 * @return 貸出書籍ID
 	 */
 	public int getBookInfo(int bookId) {
 
@@ -42,7 +42,7 @@ public class RentalBooksService {
 	/**
 	 * 書籍をrentalsに登録する
 	 *
-	 * @param bookInfo 書籍情報
+	 * @param bookId 書籍情報
 	 */
 	public void rentBook(int bookId) {
 
