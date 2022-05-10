@@ -36,19 +36,18 @@ public class ReturnBooksController {
 	public String returnBook(Locale locale, @RequestParam("bookId") Integer bookId, Model model) {
 		logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 		
-		int returnId = rentalBooksService.getRentBookInfo(bookId);
+		int returnId = rentalBooksService.getBookInfo(bookId);
 		
 		if (returnId == 0) { //rentalsに返却したい書籍ID(bookId)が登録されていなかったらエラーメッセージを表示
 			model.addAttribute("returnErrorMessage","貸出されていません。");
-			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-			return "details";
 			
 		} else { //rentalsに書籍ID(bookId)が登録されていたら書籍を返却
 			rentalBooksService.returnBook(bookId);
 			model.addAttribute("returnErrorMessage","返却済みです。");
-			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-			return "details";
-		}	
+		}
+		
+		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+		return "details";
 
 	}
 
