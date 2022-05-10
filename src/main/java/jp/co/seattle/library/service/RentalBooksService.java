@@ -52,4 +52,40 @@ public class RentalBooksService {
 	}
 	
 
+	
+	/**
+	 * 書籍の返却
+	 * 
+	 * 書籍貸出IDを取得する
+	 *
+	 * @param bookId 貸出書籍ID
+	 * @return 貸出書籍ID
+	 */
+	public int getRentBookInfo(int bookId) {
+
+		// JSPに渡すデータを設定する
+		String sql = "SELECT rent_id FROM rentals where rent_id =" + bookId;
+		
+		try {
+			int rentId = jdbcTemplate.queryForObject(sql, Integer.class);
+			return  rentId;
+		} catch (Exception e) {
+			return 0;
+		}
+
+	}
+	
+	
+	/**
+	 * 書籍を返却する = rentalsにある書籍情報を削除する
+	 * 
+	 * @param bookId 書籍ID
+	 * 
+	 */
+	public void returnBook(int bookId) {
+		String sql = "delete from rentals where rent_id = " + bookId + ";";
+
+		jdbcTemplate.update(sql);
+	}
+
 }
