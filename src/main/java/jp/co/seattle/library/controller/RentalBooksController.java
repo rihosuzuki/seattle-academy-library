@@ -28,6 +28,8 @@ public class RentalBooksController {
 	@Autowired
 	private BooksService booksService;
 
+	
+	//書籍を貸出する
 	@Transactional
 	@RequestMapping(value = "/rentBook", method = RequestMethod.POST)
 	public String rentalBook(Locale locale, @RequestParam("bookId") int bookId, Model model) {
@@ -37,16 +39,17 @@ public class RentalBooksController {
 		
 		if (rentId == 0) { //rentalsに借りたい書籍ID(bookId)が登録されていなかったら貸出できる
 			rentalBooksService.rentBook(bookId);
+			model.addAttribute("rentMessage","貸出中");
 			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 			return "details";
 			
 		} else { //rentalsに書籍ID(bookId)が登録されていたら貸出できないメッセージを表示
+			model.addAttribute("rentMessage","貸出中");
 			model.addAttribute("rentErrorMessage","貸出済みです。");
 			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 			return "details";
-		}
-		
-		
+		}	
 
 	}
+	
 }
