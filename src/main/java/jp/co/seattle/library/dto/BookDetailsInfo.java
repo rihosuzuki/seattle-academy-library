@@ -34,7 +34,7 @@ public class BookDetailsInfo {
 
     }
 
-    public BookDetailsInfo(int bookId, String title, String author, String publisher, String publishDate, String ISBN, 
+    public BookDetailsInfo(int bookId, int rent_id, String title, String author, String publisher, String publishDate, String ISBN, 
     		String description, String thumbnailUrl, String thumbnailName) {
         this.bookId = bookId;
         this.title = title;
