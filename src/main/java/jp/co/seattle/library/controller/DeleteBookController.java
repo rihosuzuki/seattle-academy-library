@@ -48,7 +48,6 @@ public class DeleteBookController {
         
         if (rentId == 0) { //rentalsに消したい書籍(bookId)が登録されていなかったら削除できる
         	booksService.deleteBookList(bookId);
-			model.addAttribute("rentMessage","貸出中");
 			
 		} else { //rentalsに書籍ID(bookId)が登録されていたら削除できないメッセージを表示
 			model.addAttribute("rentErrorMessage","貸出中のため削除できません");
