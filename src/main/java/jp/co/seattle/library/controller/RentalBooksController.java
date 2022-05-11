@@ -41,7 +41,7 @@ public class RentalBooksController {
 			return "details";
 			
 		} else { //rentalsに書籍ID(bookId)が登録されていたら貸出できないメッセージを表示
-			model.addAttribute("rentErrorMessage","貸出済みです。");
+			model.addAttribute("ErrorMessage","貸出済みです。");
 			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 			return "details";
 		}
