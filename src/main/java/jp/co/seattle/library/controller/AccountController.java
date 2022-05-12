@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.seattle.library.dto.UserInfo;
-import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.UsersService;
 
 /**
@@ -22,9 +21,9 @@ import jp.co.seattle.library.service.UsersService;
 @Controller //APIの入り口
 public class AccountController {
     final static Logger logger = LoggerFactory.getLogger(LoginController.class);
-
+    
     @Autowired
-    private BooksService booksService;
+    private UserInfo userInfo;
     @Autowired
     private UsersService usersService;
 
@@ -53,16 +52,26 @@ public class AccountController {
         logger.info("Welcome createAccount! The client locale is {}.", locale);
 
         // パラメータで受け取った書籍情報をDtoに格納する。
-        UserInfo userInfo = new UserInfo();
         userInfo.setEmail(email);
 
         // TODO バリデーションチェック、パスワード一致チェック実装
+        if (password.length() >= 8 && password.matches("^[0-9a-zA-Z]+$")) {
+        	if (password.equals(passwordForCheck)) {
+        		userInfo.setPassword(password);
+                usersService.registUser(userInfo);
+                return "login";
+                
+        	} else {
+        		model.addAttribute("errorPassword", "パスワードが一致しません。");
+        		return "createAccount";
+        	}
+        	
+        } else {
+        	model.addAttribute("errorPassword", "パスワードは8文字以上かつ半角英数字に設定してください。");
+        	return "createAccount";
+        }
+        
 
-        userInfo.setPassword(password);
-        usersService.registUser(userInfo);
-
-        model.addAttribute("bookList", booksService.getBookList());
-        return "home";
     }
 
 }
