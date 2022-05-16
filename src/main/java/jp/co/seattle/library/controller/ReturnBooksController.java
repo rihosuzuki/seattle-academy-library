@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.RentalBooksService;
 
-
 /**
  * Handles requests for the application home page.
  */
@@ -25,27 +24,25 @@ public class ReturnBooksController {
 
 	@Autowired
 	private RentalBooksService rentalBooksService;
-	
+
 	@Autowired
 	private BooksService booksService;
 
-	
-	//書籍を貸出する
+	// 書籍を貸出する
 	@Transactional
 	@RequestMapping(value = "/returnBook", method = RequestMethod.POST)
 	public String returnBook(Locale locale, @RequestParam("bookId") Integer bookId, Model model) {
 		logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
-		
+
 		int returnId = rentalBooksService.getBookInfo(bookId);
-		
-		if (returnId == 0) { //rentalsに返却したい書籍ID(bookId)が登録されていなかったらエラーメッセージを表示
-			model.addAttribute("returnErrorMessage","貸出されていません。");
-			
-		} else { //rentalsに書籍ID(bookId)が登録されていたら書籍を返却
+
+		if (returnId == 0) { // rentalsに返却したい書籍ID(bookId)が登録されていなかったらエラーメッセージを表示
+			model.addAttribute("ErrorMessage", "貸出されていません。");
+
+		} else { // rentalsに書籍ID(bookId)が登録されていたら書籍を返却
 			rentalBooksService.returnBook(bookId);
-			model.addAttribute("returnErrorMessage","返却済みです。");
 		}
-		
+
 		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 		return "details";
 

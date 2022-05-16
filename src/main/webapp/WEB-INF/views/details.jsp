@@ -42,6 +42,12 @@
                         </c:if> <input type="hidden" name="bookId" value="${bookDetailsInfo.bookId}">
                     </a>
                 </div>
+                <div>
+                    <p>${bookDetailsInfo.rentStatus}</p>
+                </div>
+                <c:if test="${!empty ErrorMessage}">
+                    <div class="error">${ErrorMessage}</div>
+                </c:if>
             </div>
             <div class="content_right">
                 <div>
@@ -79,7 +85,6 @@
             </form>
             <form method="post" action="<%=request.getContextPath()%>/edit">
                 <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_editBook">編集</button>
-                
             </form>
             <form method="post" action="deleteBook">
                 <button type="submit" value="${bookDetailsInfo.bookId}" name="bookId" class="btn_deleteBook">削除</button>

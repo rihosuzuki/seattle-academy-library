@@ -50,7 +50,7 @@ public class DeleteBookController {
         	booksService.deleteBookList(bookId);
 			
 		} else { //rentalsに書籍ID(bookId)が登録されていたら削除できないメッセージを表示
-			model.addAttribute("rentErrorMessage","貸出中のため削除できません");
+			model.addAttribute("ErrorMessage","貸出中のため削除できません");
 			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 			return "details";
 		}	
