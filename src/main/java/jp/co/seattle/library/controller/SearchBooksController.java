@@ -30,9 +30,11 @@ public class SearchBooksController {
 	 */
 	@Transactional
 	@RequestMapping(value = "searchBook", method = RequestMethod.POST)
-	public String searchBook(Locale locale, @RequestParam("search") String search, Model model) {
+	public String searchBook(Locale locale, 
+			@RequestParam("search") String search, 
+			@RequestParam("q1") String matches,  Model model) {
 
-		model.addAttribute("bookList", booksService.getSearchBookList(search));
+		model.addAttribute("bookList", booksService.getSearchBookList(search, matches));
 
 		return "home";
 

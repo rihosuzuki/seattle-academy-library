@@ -62,10 +62,10 @@ public class BooksService {
 		// JSPに渡すデータを設定する
 		String sql = "SELECT *, case when rent_id notnull then '貸出中' else '貸出可' end as rent_status "
 				+ "FROM books left OUTER JOIN rentals ON books.id = rentals.rent_id where books.id ='" + bookId + "'";
-		
+
 		BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
 		return bookDetailsInfo;
-		
+
 	}
 
 	/**
@@ -125,21 +125,34 @@ public class BooksService {
 
 		return bookId;
 	}
-	
-	
+
 	/**
 	 * 検索でHITした書籍のリストを取得する
 	 *
 	 * @return 書籍リスト
 	 */
-	public List<BookInfo> getSearchBookList(String search) {
+	public List<BookInfo> getSearchBookList(String search, String matches) {
 
-		// TODO 取得したい情報を取得するようにSQLを修正
-		List<BookInfo> searchBookList = jdbcTemplate.query(
-				" SELECT id, title, author, publisher, publish_date, thumbnail_url FROM books where title LIKE '%" + search + "%'",
+		String sql;
+
+		if (matches.equals("partial")) {
+			List<BookInfo> searchBookList = jdbcTemplate.query(
+
+				sql = " SELECT id, title, author, publisher, publish_date, thumbnail_url FROM books where title LIKE '%" + search + "%'",
 				new BookInfoRowMapper());
 
-		return searchBookList;
+			return searchBookList;
+
+			
+		} else {
+			List<BookInfo> searchBookList = jdbcTemplate.query(
+
+				sql = " SELECT id, title, author, publisher, publish_date, thumbnail_url FROM books where title = '" + search + "'",
+				new BookInfoRowMapper());
+
+			return searchBookList;
+		}
+
 	}
 
 }
