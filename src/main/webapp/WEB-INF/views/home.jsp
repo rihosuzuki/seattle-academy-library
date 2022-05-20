@@ -31,7 +31,9 @@
             </div>
             <div class="f_item">
                 <form action="searchBook" method="post" style="display: inline-flex">
-                    <input type="search" name="search" class="search1" placeholder="キーワードを入力"> <button type="submit" class="search_box">検索</button>
+                    <input type="search" name="search" class="search1" placeholder="キーワードを入力"> 
+                    <input type="radio" name="q1" value="partial" checked> 部分一致 <input type="radio" name="q1" value="exact"> 完全一致
+                    <button type="submit" class="search_box">検索</button>
                 </form>
             </div>
         </div>
