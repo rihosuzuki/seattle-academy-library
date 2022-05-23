@@ -44,9 +44,9 @@ public class DeleteBookController {
             Model model) {
         logger.info("Welcome delete! The client locale is {}.", locale);
         
-        int rentId = rentalBooksService.getBookInfo(bookId);
+        java.sql.Date rentDate = rentalBooksService.selectRentBookDate(bookId);
         
-        if (rentId == 0) { //rentalsに消したい書籍(bookId)が登録されていなかったら削除できる
+        if (rentDate == null) { //rentalsに消したい書籍(bookId)が登録されていなかったら削除できる
         	booksService.deleteBookList(bookId);
 			
 		} else { //rentalsに書籍ID(bookId)が登録されていたら削除できないメッセージを表示
