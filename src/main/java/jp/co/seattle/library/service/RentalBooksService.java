@@ -1,5 +1,6 @@
 package jp.co.seattle.library.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -88,12 +89,12 @@ public class RentalBooksService {
 	 *
 	 * @param bookId 書籍ID
 	 */
-	public java.sql.Date selectRentBookDate(int bookId) {
+	public Date selectRentBookDate(int bookId) {
 		
 		String sql = " SELECT rent_date FROM rentals where rent_id = " + bookId;
 		
 		try {
-			java.sql.Date rentBookId = jdbcTemplate.queryForObject(sql, java.sql.Date.class);
+			Date rentBookId = jdbcTemplate.queryForObject(sql, Date.class);
 			return  rentBookId;
 		} catch (Exception e) {
 			return null;

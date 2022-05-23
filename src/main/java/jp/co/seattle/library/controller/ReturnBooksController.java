@@ -1,5 +1,6 @@
 package jp.co.seattle.library.controller;
 
+import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -34,7 +35,7 @@ public class ReturnBooksController {
 	public String returnBook(Locale locale, @RequestParam("bookId") Integer bookId, Model model) {
 		logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 
-		java.sql.Date rentDate = rentalBooksService.selectRentBookDate(bookId);
+		Date rentDate = rentalBooksService.selectRentBookDate(bookId);
 
 		if (rentDate == null) { // rentalsに返却したい書籍ID(bookId)が登録されていなかったらエラーメッセージを表示
 			model.addAttribute("ErrorMessage", "貸出されていません。");

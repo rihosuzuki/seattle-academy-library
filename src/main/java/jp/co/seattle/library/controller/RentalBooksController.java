@@ -1,5 +1,6 @@
 package jp.co.seattle.library.controller;
 
+import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -34,7 +35,7 @@ public class RentalBooksController {
 		logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 		
 		int rentId = rentalBooksService.getBookInfo(bookId);
-		java.sql.Date rentDate = rentalBooksService.selectRentBookDate(bookId);
+		Date rentDate = rentalBooksService.selectRentBookDate(bookId);
 		
 		if (rentId == 0) { //rentalsに借りたい書籍ID(bookId)が登録されていなかったら貸出できる
 			rentalBooksService.rentBook(bookId);
