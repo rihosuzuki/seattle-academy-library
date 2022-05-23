@@ -34,19 +34,20 @@ public class RentalBooksController {
 		logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 		
 		int rentId = rentalBooksService.getBookInfo(bookId);
+		java.sql.Date rentDate = rentalBooksService.selectRentBookDate(bookId);
 		
 		if (rentId == 0) { //rentalsに借りたい書籍ID(bookId)が登録されていなかったら貸出できる
 			rentalBooksService.rentBook(bookId);
-			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-			return "details";
+			
+		} else if (rentDate == null) {
+			rentalBooksService.rentedBook(bookId);
 			
 		} else { //rentalsに書籍ID(bookId)が登録されていたら貸出できないメッセージを表示
 			model.addAttribute("ErrorMessage","貸出済みです。");
-			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-			return "details";
+			
 		}
-		
-		
+		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+		return "details";
 
 	}
 }

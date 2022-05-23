@@ -31,13 +31,12 @@
             </div>
             <div class="f_item">
                 <form action="searchBook" method="post" style="display: inline-flex">
-                    <input type="search" name="search" class="search1" placeholder="キーワードを入力"> 
-                    <input type="radio" name="q1" value="partial" checked> 部分一致 <input type="radio" name="q1" value="exact"> 完全一致
+                    <input type="search" name="search" class="search1" placeholder="キーワードを入力"> <input type="radio" name="q1" value="partial" checked> 部分一致 <input type="radio" name="q1" value="exact"> 完全一致
                     <button type="submit" class="search_box">検索</button>
                 </form>
             </div>
         </div>
-        <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a> <a href="<%=request.getContextPath()%>/bulkBook" class="btn_bulk_book">一括登録</a>
+        <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a> <a href="<%=request.getContextPath()%>/bulkBook" class="btn_bulk_book">一括登録</a> <a href="<%=request.getContextPath()%>/rentHistory" class="btn_rent_book">貸出履歴一覧</a>
         <div class="content_body">
             <c:if test="${!empty resultMessage}">
                 <div class="error_msg">${resultMessage}</div>

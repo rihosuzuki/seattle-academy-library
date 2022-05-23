@@ -28,15 +28,15 @@ public class ReturnBooksController {
 	@Autowired
 	private BooksService booksService;
 
-	// 書籍を貸出する
+	// 書籍を返却する
 	@Transactional
 	@RequestMapping(value = "/returnBook", method = RequestMethod.POST)
 	public String returnBook(Locale locale, @RequestParam("bookId") Integer bookId, Model model) {
 		logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 
-		int returnId = rentalBooksService.getBookInfo(bookId);
+		java.sql.Date rentDate = rentalBooksService.selectRentBookDate(bookId);
 
-		if (returnId == 0) { // rentalsに返却したい書籍ID(bookId)が登録されていなかったらエラーメッセージを表示
+		if (rentDate == null) { // rentalsに返却したい書籍ID(bookId)が登録されていなかったらエラーメッセージを表示
 			model.addAttribute("ErrorMessage", "貸出されていません。");
 
 		} else { // rentalsに書籍ID(bookId)が登録されていたら書籍を返却
