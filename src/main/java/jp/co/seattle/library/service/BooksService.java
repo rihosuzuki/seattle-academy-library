@@ -46,9 +46,11 @@ public class BooksService {
 	 * 
 	 */
 	public void deleteBookList(int bookId) {
-		String sql = "delete from books where id = '" + bookId + "'";
+		
+		String sql = "with d_data as (delete from books where id = " + bookId + ") delete from rentals where rent_id = " + bookId;
 
 		jdbcTemplate.update(sql);
+
 	}
 
 	/**

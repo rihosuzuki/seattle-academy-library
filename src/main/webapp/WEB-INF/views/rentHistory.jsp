@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>貸出履歴一覧｜シアトルライブラリ｜シアトルコンサルティング株式会社</title>
-
 <link href="<c:url value="/resources/css/reset.css" />" rel="stylesheet" type="text/css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">
@@ -43,11 +42,11 @@
                 <tbody>
                     <c:forEach var="RentBooksInfo" items="${rentalBooksList}">
                         <tr>
-                            <th><form method="post" action="<%=request.getContextPath()%>/details">
+                            <td><form method="post" action="<%=request.getContextPath()%>/details">
                                     <input type="hidden" name="bookId" value="${RentBooksInfo.bookId}"><a href="javascript:void(0)" onclick="this.parentNode.submit();">${RentBooksInfo.title}</a>
-                                </form></th>
-                            <th>${RentBooksInfo.rentalDate}</th>
-                            <th>${RentBooksInfo.returnDate}</th>
+                                </form></td>
+                            <td>${RentBooksInfo.rentalDate}</td>
+                            <td>${RentBooksInfo.returnDate}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
