@@ -46,9 +46,11 @@ public class BooksService {
 	 * 
 	 */
 	public void deleteBookList(int bookId) {
-		String sql = "delete from books where id = '" + bookId + "'";
+		
+		String sql = "with d_data as (delete from books where id = " + bookId + ") delete from rentals where rent_id = " + bookId;
 
 		jdbcTemplate.update(sql);
+
 	}
 
 	/**
@@ -60,7 +62,7 @@ public class BooksService {
 	public BookDetailsInfo getBookInfo(int bookId) {
 
 		// JSPに渡すデータを設定する
-		String sql = "SELECT *, case when rent_id notnull then '貸出中' else '貸出可' end as rent_status "
+		String sql = "SELECT *, case when rent_date notnull then '貸出中' else '貸出可' end as rent_status "
 				+ "FROM books left OUTER JOIN rentals ON books.id = rentals.rent_id where books.id ='" + bookId + "'";
 
 		BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());

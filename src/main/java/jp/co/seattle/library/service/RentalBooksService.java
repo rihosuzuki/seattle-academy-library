@@ -1,10 +1,16 @@
 package jp.co.seattle.library.service;
 
+import java.sql.Date;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+
+import jp.co.seattle.library.dto.RentalBooksInfo;
+import jp.co.seattle.library.rowMapper.RentalBooksRowMapper;
 
 /**
  * 書籍貸出サービス
@@ -40,29 +46,76 @@ public class RentalBooksService {
 	
 	
 	/**
-	 * 書籍をrentalsに登録する
+	 * 書籍情報と貸出日をrentalsテーブルに登録する
 	 *
 	 * @param bookId 書籍情報
 	 */
 	public void rentBook(int bookId) {
 
-		String sql = "INSERT INTO rentals (rent_id) VALUES (" + bookId + ");";
+		String sql = "INSERT INTO rentals (rent_id, rent_date) VALUES (" + bookId + "," + "now());";
 
 		jdbcTemplate.update(sql);
 	}
 	
-
 	
 	/**
-	 * 書籍を返却する = rentalsにある書籍情報を削除する
-	 * 
+	 * 書籍IDに紐づく書籍貸出情報を更新する
+	 *
 	 * @param bookId 書籍ID
-	 * 
 	 */
-	public void returnBook(int bookId) {
-		String sql = "delete from rentals where rent_id = " + bookId + ";";
-
+	public void rentedBook(int bookId) {
+		
+		String sql = " UPDATE rentals set return_date = null, rent_date = now() where rent_id = " + bookId;
+		
 		jdbcTemplate.update(sql);
 	}
+	
+	
+	/**
+	 * 書籍IDに紐づく書籍返却情報を更新する
+	 *
+	 * @param bookId 書籍ID
+	 */
+	public void returnBook(int bookId) {
+		
+		String sql = " UPDATE rentals set return_date = now(), rent_date = null where rent_id = " + bookId;
+		
+		jdbcTemplate.update(sql);
+	}
+
+
+	/**
+	 * 書籍IDに紐づく書籍の貸出日／返却日を取得する
+	 *
+	 * @param bookId 書籍ID
+	 */
+	public Date selectRentBookDate(int bookId) {
+		
+		String sql = " SELECT rent_date FROM rentals where rent_id = " + bookId;
+		
+		try {
+			Date rentBookId = jdbcTemplate.queryForObject(sql, Date.class);
+			return  rentBookId;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	
+	/**
+	 * 貸出したことのある書籍履歴のリストを取得する
+	 *
+	 * @return 書籍リスト
+	 */
+	public List<RentalBooksInfo> RentBookList() {
+		List<RentalBooksInfo> rentBookList = jdbcTemplate.query(
+				
+				"SELECT rent_id, title, rent_date, return_date FROM books LEFT OUTER JOIN rentals ON books.id = rentals.rent_id where rent_id is not null order by title",
+				new RentalBooksRowMapper());
+
+		return rentBookList;
+	}
+
+
 
 }
